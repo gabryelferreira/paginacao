@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>Testando paginação</title>
+    <meta charset="utf-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="consulta-toda">
+        <div class="titulo-consulta">
+            <h1>Usuários</h1>
+        </div>
+        <div class="titulo-dados-consulta">
+            <div class="titulo-dados"><h1>Nome</h1></div>
+            <div class="titulo-dados"><h1>Sexo</h1></div>
+            <div class="titulo-dados"><h1>Idade</h1></div>
+            <div class="titulo-dados"><h1>Status</h1></div>
+            <div class="titulo-dados"><h1>Ação</h1></div>
+        </div>
+        <div id="dado1" class="dados-consulta">
+            <div class="dados"><h1>Gabryel</h1></div>
+            <div class="dados"><h1>Masculino</h1></div>
+            <div class="dados"><h1>19</h1></div>
+            <div class="dados"><h1>Solteiro</h1></div>
+            <div class="dados"><input type="button" id="1" class="btnExcluir" value="&#10006;"></div>
+        </div>
+        <div id="dado2" class="dados-consulta">
+            <div class="dados"><h1>Lourval</h1></div>
+            <div class="dados"><h1>Masculino</h1></div>
+            <div class="dados"><h1>50</h1></div>
+            <div class="dados"><h1>Casado(a)</h1></div>
+            <div class="dados"><input type="button" id="2" class="btnExcluir" value="&#10006;"></div>
+        </div>
+        <div id="dado3" class="dados-consulta">
+            <div class="dados"><h1>Paola</h1></div>
+            <div class="dados"><h1>Feminino</h1></div>
+            <div class="dados"><h1>41</h1></div>
+            <div class="dados"><h1>Casado(a)</h1></div>
+            <div class="dados"><input type="button" id="3" class="btnExcluir" value="&#10006;"></div>
+        </div>
+        <div id="dado4" class="dados-consulta">
+            <div class="dados"><h1>Nicholas</h1></div>
+            <div class="dados"><h1>Masculino</h1></div>
+            <div class="dados"><h1>19</h1></div>
+            <div class="dados"><h1>Solteiro</h1></div>
+            <div class="dados"><input type="button" id="4" class="btnExcluir" value="&#10006;"></div>
+        </div>
+        <div id="dado5" class="dados-consulta">
+            <div class="dados"><h1>Nicolas</h1></div>
+            <div class="dados"><h1>Masculino</h1></div>
+            <div class="dados"><h1>19</h1></div>
+            <div class="dados"><h1>Casado(a)</h1></div>
+            <div class="dados"><input type="button" id="5" class="btnExcluir" value="&#10006;"></div>
+        </div>
+        <div id="dado6" class="dados-consulta">
+            <div class="dados"><h1>Edcarlos</h1></div>
+            <div class="dados"><h1>Masculino</h1></div>
+            <div class="dados"><h1>43</h1></div>
+            <div class="dados"><h1>Casado(a)</h1></div>
+            <div class="dados"><input type="button" id="6" class="btnExcluir" value="&#10006;"></div>
+        </div>
+    </div>
+    <script src="js/pagination.js"></script>
+    <script>
+        
+        //CRIANDO PAGINAÇÃO DAS PÁGINAS
+        //os parametros da função createPagination são, respectivamente:
+        //(classe ou id da tag html de onde ficará exposta a paginação)
+        //(classe ou id da tag html de quem será paginado)
+        //EXEMPLO:
+        createPagination('.consulta-toda', '.dados-consulta');
+        
+        
+        //CRIANDO SELECT PARA ESCOLHER QUANTOS DADOS SERÃO MOSTRADOS POR PÁGINA
+        //o único parametro da função createSelect é:
+        //(classe ou id html de onde ficará o select)
+        //EXEMPLO:
+        createSelect('.titulo-consulta');
+        
+        
+        //caso algum dado for apagado da tabela, execute a função updatePagination sem parametros
+        //EXEMPLO:
+        $(document).ready(function(){
+            $(document).on('click', '.btnExcluir', function(){
+                $('#dado' + this.id).remove();
+                updatePagination();
+            })
+        })
+        
+        
+        
+    </script>
+</body>
+</html>
