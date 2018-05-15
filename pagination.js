@@ -1,5 +1,6 @@
 var campos = [];
 var numeroDePaginas, numRows, paginaAtual, paginaClick, where, what;
+var paginationColor = null;
 
 function createPagination(whereIt, whatIt){
     paginaClick = 0;
@@ -13,7 +14,11 @@ function createPagination(whereIt, whatIt){
 }
 
 function selectedPagina(){
-    $('.selectedPagina').css('background-color', 'dodgerblue');
+    if (paginationColor == null){
+        $('.selectedPagina').css('background-color', 'dodgerblue');
+    } else {
+        $('.selectedPagina').css('background-color', paginationColor);
+    }
     $('.selectedPagina').css('color', 'white');
 }
 
@@ -29,6 +34,12 @@ function deixarInvisivel(){
     $('.invisivel').css('display', 'none');
 }
 
+function setPaginationColor(color){
+    paginationColor = color;
+}
+
+
+
 function styleForPagination(){
     $('.paginasConsulta').css('margin', 'auto');
     $('.paginasConsulta').css('margin-top', '20px');
@@ -40,8 +51,12 @@ function styleForPagination(){
     $('.paginasConsulta input').css('cursor', 'pointer');
     $('.paginasConsulta input').css('margin', '0 2px');
     $(".paginasConsulta input").hover(function() {
-      $(this).css("background-color","dodgerblue");
-      $(this).css("color","white");
+        if (paginationColor == null){
+            $(this).css("background-color","dodgerblue");
+        } else {
+            $(this).css("background-color", paginationColor);
+        }
+        $(this).css("color","white");
     }, function(){
         var id = $(this).attr('id').split('btnNumeroPagina');
         if (id[1] != paginaAtual){
@@ -57,7 +72,7 @@ function updatePagination(){
 }
 
 function createSelect(whereSelect){
-    $(whereSelect).append('<select class="selectRowsSelect"><option value="5">5</option><option value="10">10</option><option value="15">15</option></select>');
+    $(whereSelect).append('<select class="selectRowsSelect"><option class="foda" value="5">5</option><option value="10">10</option><option value="15">15</option></select>');
     styleForSelect();
 }
 
@@ -69,12 +84,18 @@ function styleForSelect(){
     $('.selectRowsSelect').css('margin-bottom', '20px');
     $('.selectRowsSelect').css('font-size', '14px');
     $('.selectRowsSelect').css('outline', 'none');
+    
+    
+    
     $('.selectRowsSelect').focusin(function(){
         $('.selectRowsSelect').css('border', '2px solid #3f7998');
+        
     })
     $('.selectRowsSelect').focusout(function(){
         $('.selectRowsSelect').css('border', '1px solid lightgray');
     })
+    
+    
 }
 
 $(document).ready(function(){
