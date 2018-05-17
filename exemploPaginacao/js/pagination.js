@@ -1,7 +1,8 @@
 var campos = [];
 var numeroDePaginas, numRows = 5, paginaAtual = 0, paginaClick = 0, maxPages = 5;
 var firstPage, lastPage;
-var paginationColor = null;
+var paginationColor = 'dodgerblue';
+var paginationFont = 'Roboto, sans-serif';
 var pagination = ".pagination";
 var paginationInput = ".pagination input";
 var paginationData = ".pagination-data";
@@ -14,12 +15,10 @@ function createPagination(){
     calcularNumeroDePaginas(paginaAtual);    
 }
 
+
+
 function selectedPagina(){
-    if (paginationColor == null){
-        $('.selectedPagina').css('background-color', 'dodgerblue');
-    } else {
-        $('.selectedPagina').css('background-color', paginationColor);
-    }
+    $('.selectedPagina').css('background-color', paginationColor);
     $('.selectedPagina').css('color', 'white');
 }
 
@@ -37,7 +36,12 @@ function setPaginationColor(color){
     createPagination();
 }
 
-function setMaxPages(max){
+function setPaginationFont(font){
+    paginationFont = font;
+    createPagination();
+}
+
+function setPaginationMaxPages(max){
     maxPages = max;
     calcularNumeroDePaginas(paginaAtual);
 }
@@ -47,24 +51,24 @@ function styleForPagination(){
     $(pagination).css('margin', 'auto');
     $(pagination).css('margin-top', '20px');
     $(paginationInput).css('border', '0');
+    $(paginationInput).css('border-top', '1px solid lightgray');
+    $(paginationInput).css('font-family', paginationFont);
     $(paginationInput).css('border-radius', '5px');
     $(paginationInput).css('padding', '7px 14px');
     $(paginationInput).css('font-size', '16px');
     $(paginationInput).css('outline', 'none');
     $(paginationInput).css('cursor', 'pointer');
     $(paginationInput).css('margin', '0 2px');
+    $(paginationInput).css('box-shadow', '0 4px 7px #777');
     $(paginationInput).hover(function() {
-        if (paginationColor == null){
-            $(this).css("background-color","dodgerblue");
-        } else {
-            $(this).css("background-color", paginationColor);
-        }
+        $(this).css("background-color", paginationColor);
         $(this).css("color","white");
     }, function(){
         var id = $(this).attr('id').split('btnNumeroPagina');
         if (id[1] != paginaAtual){
             $(this).css("background-color","transparent");
-            $(this).css("color","black");
+            $(this).css("color", "black");
+            $(this).css("cursor", "pointer");
         }
         
     });
@@ -107,18 +111,28 @@ $(document).ready(function(){
         paginaClick = pagina[1];
         mostrarNumeroDePaginas(paginaClick);
     })
-    $(document).on('click', '.btnPaginaAnterior',function(){
-        if (parseInt(paginaAtual) - 1 >= 0){
-            paginaClick = parseInt(paginaClick) - 1;
+    $(document).on('click', '.btnFirstPage',function(){
+        if ((paginaAtual != 0) && (numeroDePaginas > 0)){
+            paginaClick = 0;
             mostrarNumeroDePaginas(paginaClick);
         }
+        
+//        if (parseInt(paginaAtual) - 1 >= 0){
+//            paginaClick = parseInt(paginaClick) - 1;
+//            mostrarNumeroDePaginas(paginaClick);
+//        }
 
     })
-    $(document).on('click', '.btnPaginaSeguinte',function(){
-        if (parseInt(paginaClick) + 1 < numeroDePaginas){
-            paginaClick = parseInt(paginaClick) + 1;
+    $(document).on('click', '.btnLastPage',function(){
+        if ((paginaAtual != parseInt(numeroDePaginas) - 1) && (numeroDePaginas > 0)){
+            paginaClick = parseInt(numeroDePaginas) - 1;
             mostrarNumeroDePaginas(paginaClick);
         }
+        
+//        if (parseInt(paginaClick) + 1 < numeroDePaginas){
+//            paginaClick = parseInt(paginaClick) + 1;
+//            mostrarNumeroDePaginas(paginaClick);
+//        }
 
     })
 
@@ -200,12 +214,12 @@ function showPagination(pagina){
     $('#btnNumeroPagina' + paginaAtual).removeClass('selectedPagina');
     $('#btnNumeroPagina' + paginaAtual).addClass('transparent');
     paginaAtual = pagina;
-    $(pagination).html('<input type="button" id="btnPagina-1" class="btnPaginaAnterior transparent" value="Anterior">');
+    $(pagination).html('<input type="button" id="btnPagina-1" class="btnFirstPage transparent" value="Início">');
     calcularPaginas();
     for (i = firstPage; i < lastPage; i++){
         $(pagination).append('<input type="button" class="btnPagina transparent" id="btnNumeroPagina' + (i) + '" value="' + (i+1) + '">');
     }
-    $(pagination).append('<input type="button" id="btnPagina-1" class="btnPaginaSeguinte transparent" value="Próxima">');
+    $(pagination).append('<input type="button" id="btnPagina-1" class="btnLastPage transparent" value="Fim">');
     $('#btnNumeroPagina' + paginaAtual).removeClass('transparent');
     $('#btnNumeroPagina' + paginaAtual).addClass('selectedPagina');
     selectedPagina();
