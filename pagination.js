@@ -8,8 +8,25 @@ var paginationInput = ".pagination input";
 var paginationData = ".pagination-data";
 var paginationSelect = ".pagination-select";
 var select = ".select-pagination-select";
+createLink();
 createPagination();
 createSelect();    
+
+function createLink(){
+    var head  = document.getElementsByTagName('head')[0];
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = 'https://fonts.googleapis.com/css?family=Roboto+Condensed:700';
+    link.media = 'all';
+    var link2  = document.createElement('link');
+    link2.rel  = 'stylesheet';
+    link2.type = 'text/css';
+    link2.href = 'https://fonts.googleapis.com/css?family=Roboto:100';
+    link.media = 'all';
+    head.appendChild(link);
+    head.appendChild(link2);
+}
 
 function createPagination(){
     calcularNumeroDePaginas(paginaAtual);    
